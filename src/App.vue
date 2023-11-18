@@ -11,29 +11,32 @@ import {
   METER_INFO_PATH_TO_NAME_MAPPING
 } from '@/constants'
 
-const meterData = ref()
-const footprintData = ref()
-
 const meterInfoItems = ref<InfoItem[]>([])
 const footprintInfoItems = ref<InfoItem[]>([])
 
 onMounted(async () => {
-  meterData.value = await fetchMeterDataForMeterId(METER_ID)
-  meterInfoItems.value = createArrayOfKeyValuePairsForProvidedPaths(
-    meterData.value,
-    METER_INFO_PATH_TO_NAME_MAPPING
-  )
+    fetchMeterDataForMeterId(METER_ID).then((meterDataValue) => {
+      meterInfoItems.value = createArrayOfKeyValuePairsForProvidedPaths(
+        meterDataValue,
+        METER_INFO_PATH_TO_NAME_MAPPING
+      )
+    }).catch((error) => {
+      console.error(error)
+    })
 
-  footprintData.value = await fetchFootprintDataForMeterId({
-    meter_id: METER_ID,
-    granularity: Granularity.HH,
-    start_date: '2023-01-01T00:00',
-    end_date: '2023-02-01T00:00'
-  })
-  footprintInfoItems.value = createArrayOfKeyValuePairsForProvidedPaths(
-    footprintData.value,
-    FOOTER_INFO_PATH_TO_NAME_MAPPING
-  )
+   fetchFootprintDataForMeterId({
+      meter_id: METER_ID,
+      granularity: Granularity.HH,
+      start_date: '2023-01-01T00:00',
+      end_date: '2023-02-01T00:00'
+    }).then((footprintDataValue) => {
+      footprintInfoItems.value = createArrayOfKeyValuePairsForProvidedPaths(
+        footprintDataValue,
+        FOOTER_INFO_PATH_TO_NAME_MAPPING
+      )
+    }).catch((error) => {
+      console.error(error)
+    })
 })
 </script>
 
@@ -43,10 +46,10 @@ onMounted(async () => {
       <h2>Footprint dashboard</h2>
     </header>
     <main>
-      <div v-if="!(meterData || footprintData)">Fetching data...</div>
+      <div v-if="!(Boolean(meterInfoItems.length) || Boolean(footprintInfoItems.length))">Fetching data...</div>
       <div v-else>
         <InfoBlock title="Customer information">
-          <div v-if="!meterData">Fetching data...</div>
+          <div v-if="!Boolean(meterInfoItems.length)">Fetching data...</div>
           <div v-else>
             <InfoBlockItem
               v-for="item in meterInfoItems"
@@ -62,7 +65,7 @@ onMounted(async () => {
         value of 0.0001%
      "
         >
-          <div v-if="!footprintData">Fetching data...</div>
+          <div v-if="!Boolean(footprintInfoItems.length)">Fetching data...</div>
           <div v-else>
             <InfoBlockItem
               v-for="item in footprintInfoItems"
