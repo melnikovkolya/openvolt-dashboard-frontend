@@ -6,7 +6,7 @@ defineProps<{
 </script>
 
 <template>
-  <div v-if="dataValue" class="info-block-item-container">
+  <div v-if="typeof dataValue !== 'undefined'" class="info-block-item-container">
     <div class="info-block-item-name">{{ dataKey }}</div>
     <div class="info-block-item-value">
       {{ dataValue }}
