@@ -32,6 +32,8 @@ The code for the Dashboard Backend is available [here](https://github.com/melnik
 
 Clone the repository and navigate into it.
 
+Create an `.env` file with the contents provided in the `example.env` file.
+
 Run
 
 ```bash
