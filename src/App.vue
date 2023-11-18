@@ -4,7 +4,7 @@ import InfoBlock from '@/components/InfoBlock.vue'
 import InfoBlockItem from '@/components/InfoBlockItem.vue'
 import { createArrayOfKeyValuePairsForProvidedPaths } from '@/helpers'
 import { fetchMeterDataForMeterId, fetchFootprintDataForMeterId } from '@/services'
-import type { InfoItem } from '@/types'
+import { Granularity, type InfoItem } from '@/types'
 import {
   METER_ID,
   FOOTER_INFO_PATH_TO_NAME_MAPPING,
@@ -24,7 +24,12 @@ onMounted(async () => {
     METER_INFO_PATH_TO_NAME_MAPPING
   )
 
-  footprintData.value = await fetchFootprintDataForMeterId(METER_ID)
+  footprintData.value = await fetchFootprintDataForMeterId({
+    meter_id: METER_ID,
+    granularity: Granularity.HH,
+    start_date: '2023-01-01T00:00',
+    end_date: '2023-02-01T00:00'
+  })
   footprintInfoItems.value = createArrayOfKeyValuePairsForProvidedPaths(
     footprintData.value,
     FOOTER_INFO_PATH_TO_NAME_MAPPING
