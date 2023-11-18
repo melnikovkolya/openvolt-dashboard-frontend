@@ -10,6 +10,8 @@ The footprint consists of the following properties:
 * total CO2 emitted
 * the fuel mix based on the National Grid's fuel mix data.
 
+![Energy footprint dashboard](./src/assets/energy-footprint-dashboard-interface.png)
+
 The **total energy** consumption is calculated by summing up the energy consumption of the meter in the given period.
 
 The **total amount of CO2** (kgs) emitted by the electricity generated for the given meter in the given period
