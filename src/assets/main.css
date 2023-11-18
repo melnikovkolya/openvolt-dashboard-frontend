@@ -6,12 +6,6 @@
     font-weight: normal;
 }
 
-a {
-    text-decoration: none;
-    color: var(--vt-c-text-dark-2);
-    transition: 0.4s;
-}
-
 body {
     display: flex;
     min-height: 100vh;

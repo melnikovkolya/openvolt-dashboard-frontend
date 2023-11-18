@@ -23,13 +23,20 @@ defineProps<{
 }
 .info-block-item-name {
   font-weight: bold;
-  width: 360px;
+  min-width: 360px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   margin: 0 1rem 0 0;
 }
 
-.info-block-item-value {
+@media (max-width: 768px) {
+  .info-block-item-value {
+    font-size: 0.8rem;
+  }
+
+  .info-block-item-container {
+    flex-direction: column;
+  }
 }
 </style>

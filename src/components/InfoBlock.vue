@@ -22,7 +22,6 @@ defineProps<{
 }
 
 .info-block-header-note {
-  width: 100%;
   padding-bottom: 0.5rem;
   font-size: 0.8rem;
 }
