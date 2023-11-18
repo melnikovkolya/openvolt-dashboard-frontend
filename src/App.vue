@@ -72,8 +72,8 @@ onMounted(async () => {
         </InfoBlock>
         <InfoBlock
           title="Energy consumption footprint"
-          note="Please note: the share values are fixed to 2 decimal places, so 0.00% is returned for a
-        value of 0.0001%
+          note="Please note: the share values are fixed to 3 decimal places, so 0.000 is returned for a
+        value of 0.0001, for example.
      "
         >
           <div v-if="!Boolean(footprintInfoItems.length)">Fetching data...</div>
