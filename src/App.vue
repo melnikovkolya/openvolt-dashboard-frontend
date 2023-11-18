@@ -11,30 +11,39 @@ import {
   METER_INFO_PATH_TO_NAME_MAPPING
 } from '@/constants'
 
+const start_date = '2023-01-01T00:00'
+const end_date = '2023-02-01T00:00'
+
 const meterInfoItems = ref<InfoItem[]>([])
 const footprintInfoItems = ref<InfoItem[]>([])
 
 onMounted(async () => {
-    fetchMeterDataForMeterId(METER_ID).then((meterDataValue) => {
+  // Not using Promise.all() here because whatever data is fetched first will be shown first.
+  // This way the user will see some data sooner.
+  fetchMeterDataForMeterId(METER_ID)
+    .then((meterDataValue) => {
       meterInfoItems.value = createArrayOfKeyValuePairsForProvidedPaths(
         meterDataValue,
         METER_INFO_PATH_TO_NAME_MAPPING
       )
-    }).catch((error) => {
+    })
+    .catch((error) => {
       console.error(error)
     })
 
-   fetchFootprintDataForMeterId({
-      meter_id: METER_ID,
-      granularity: Granularity.HH,
-      start_date: '2023-01-01T00:00',
-      end_date: '2023-02-01T00:00'
-    }).then((footprintDataValue) => {
+  fetchFootprintDataForMeterId({
+    meter_id: METER_ID,
+    granularity: Granularity.HH,
+    start_date,
+    end_date
+  })
+    .then((footprintDataValue) => {
       footprintInfoItems.value = createArrayOfKeyValuePairsForProvidedPaths(
         footprintDataValue,
         FOOTER_INFO_PATH_TO_NAME_MAPPING
       )
-    }).catch((error) => {
+    })
+    .catch((error) => {
       console.error(error)
     })
 })
@@ -46,7 +55,9 @@ onMounted(async () => {
       <h2>Footprint dashboard</h2>
     </header>
     <main>
-      <div v-if="!(Boolean(meterInfoItems.length) || Boolean(footprintInfoItems.length))">Fetching data...</div>
+      <div v-if="!(Boolean(meterInfoItems.length) || Boolean(footprintInfoItems.length))">
+        Fetching data...
+      </div>
       <div v-else>
         <InfoBlock title="Customer information">
           <div v-if="!Boolean(meterInfoItems.length)">Fetching data...</div>

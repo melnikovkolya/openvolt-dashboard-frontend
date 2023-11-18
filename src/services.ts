@@ -7,7 +7,12 @@ export const fetchMeterDataForMeterId = async (meter_id: string) => {
   return await meterDataRaw.json()
 }
 
-export const fetchFootprintDataForMeterId = async ({meter_id, granularity, start_date, end_date}: FootprintForMeterId) => {
+export const fetchFootprintDataForMeterId = async ({
+  meter_id,
+  granularity,
+  start_date,
+  end_date
+}: FootprintForMeterId) => {
   const footprintDataRaw = await fetch(
     `${import.meta.env.VITE_API_URL}/${
       import.meta.env.VITE_API_ENDPOINT_FOOTPRINT
