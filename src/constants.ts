@@ -23,3 +23,9 @@ export const FOOTER_INFO_PATH_TO_NAME_MAPPING = [
   { path: 'fuelMix.generationMix.wind', name: 'Wind share' },
   { path: 'fuelMix.generationMix.other', name: 'Other share' }
 ]
+
+export const FORMATTED_DATE_OPTIONS: Intl.DateTimeFormatOptions = {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric'
+}

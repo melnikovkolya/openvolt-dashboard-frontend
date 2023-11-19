@@ -8,7 +8,8 @@ import { Granularity, type InfoItem } from '@/types'
 import {
   METER_ID,
   FOOTER_INFO_PATH_TO_NAME_MAPPING,
-  METER_INFO_PATH_TO_NAME_MAPPING
+  METER_INFO_PATH_TO_NAME_MAPPING,
+  FORMATTED_DATE_OPTIONS
 } from '@/constants'
 
 const start_date = '2023-01-01T00:00'
@@ -16,6 +17,9 @@ const end_date = '2023-02-01T00:00'
 
 const meterInfoItems = ref<InfoItem[]>([])
 const footprintInfoItems = ref<InfoItem[]>([])
+
+const formattedStartDate = new Date(start_date).toLocaleDateString('en-GB', FORMATTED_DATE_OPTIONS)
+const formattedEndDate = new Date(end_date).toLocaleDateString('en-GB', FORMATTED_DATE_OPTIONS)
 
 onMounted(async () => {
   // Not using Promise.all() here because whatever data is fetched first will be shown first.
@@ -70,12 +74,14 @@ onMounted(async () => {
             />
           </div>
         </InfoBlock>
-        <InfoBlock
-          title="Energy consumption footprint"
-          note="Please note: the share values are fixed to 3 decimal places, so 0.000 is returned for a
-        value of 0.0001, for example.
-     "
-        >
+        <InfoBlock title="Energy consumption footprint">
+          <template #subTitle>
+            {{ `Time period: ${formattedStartDate} - ${formattedEndDate}` }}
+          </template>
+          <template #note>
+            Please note: the share values are fixed to 3 decimal places, so 0.000 is returned for a
+            value of 0.0001, for example.
+          </template>
           <div v-if="!Boolean(footprintInfoItems.length)">Fetching data...</div>
           <div v-else>
             <InfoBlockItem
