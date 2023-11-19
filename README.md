@@ -4,6 +4,7 @@
 It is a simple dashboard written in Vue using TypeScript.
 
 Given a `meter_id` and a `start_date` and `end_date` it returns the energy footprint of the meter in the given period.
+The `start_date` is included in the calculation, while the `end_date` is excluded from the calculation, e.g.,: [``start_date``, ``end_date``).
 
 The footprint consists of the following properties:
 * total energy consumption
